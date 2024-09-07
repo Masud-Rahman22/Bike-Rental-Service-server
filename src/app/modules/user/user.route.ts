@@ -8,4 +8,8 @@ router.get(
     UserControllers.getUser,
 );
 
+router.put(
+    '/me/:_id',
+    UserControllers.updateProfile,
+)
 export const UserRoutes = router;

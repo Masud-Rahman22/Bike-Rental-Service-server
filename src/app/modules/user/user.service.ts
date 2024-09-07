@@ -43,7 +43,10 @@ const getUserFromDB = async (id: string) => {
 };
 
 const updateProfileIntoDB = async(id: string , payload:TLoginInfo)=>{
-    
+    const result = await User.findByIdAndUpdate(id, payload, {
+        new: true,
+    });
+    return result;
 }
 
 export const UserServices = {
