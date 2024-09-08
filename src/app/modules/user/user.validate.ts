@@ -10,6 +10,17 @@ const userValidationSchema = z.object({
         address: z.string(),
     })
 });
+
+const userUpdateValidationSchema = z.object({
+    body: z.object({
+        name: z.string().optional(),
+        email: z.string().email("Invalid email address").optional(),
+        role: z.enum(['user', 'admin']).optional(),
+        password: z.string().min(6, "Password must be at least 6 characters long").optional(),
+        phone: z.string().optional(),
+        address: z.string().optional(),
+    })
+});
 const LoginValidationSchema = z.object({
     body: z.object({
         email: z.string().email(),
@@ -17,5 +28,5 @@ const LoginValidationSchema = z.object({
     })
 })
 export const UserValidation = {
-    userValidationSchema, LoginValidationSchema
+    userValidationSchema, LoginValidationSchema, userUpdateValidationSchema
 };
