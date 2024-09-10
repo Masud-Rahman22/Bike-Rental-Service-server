@@ -1,17 +1,37 @@
-## README: Express Application with TypeScript, ESLint, and Prettier
+# **Project Name**
 
-This project is an Express application written in TypeScript and utilizes ESLint and Prettier for code linting and formatting.
+<!-- ### Live URL: [https://car-washing-system-sandy.vercel.app](https://car-washing-system-sandy.vercel.app) -->
 
-**Prerequisites:**
+## **Overview**
 
-- Node.js (version 16 or later recommended): https://nodejs.org/en/about/previous-releases
-- npm (comes bundled with Node.js)
+    	 This backend service, built with Node.js, Express, and TypeScript, manages bike rentals and user accounts. It lets you create and update bike rentals, calculate rental costs, and handle user profiles. It uses MongoDB for data storage and provides an easy way to manage bike rentals and reservations.
 
-**Installation:**
+## **Features**
 
-1. Clone this repository or download the project files.
-2. Open a terminal in the project directory.
-3. Install dependencies:
+- User authentication (registration, login)
+- Role-based access control (Admin/User)
+- CRUD operations for bikes and rentals
+- Calculate rental costs based on duration
+- Manage bike availability status
+- JWT-based authentication for secure access
 
+---
+
+## **Technologies Used**
+
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Validation:** Zod for schema validation
+- **Authentication:** JWT (JSON Web Tokens)
+- **Version Control:** Git & GitHub
+- **Deployment:** [My deployment platform Vercel]
+
+---
+
+## **Installation and Setup**
+
+1. Clone the repository:
    ```bash
-   npm install
+   git clone https://github.com/yourusername/your-repo.git
+   cd your-repo
+   ```
