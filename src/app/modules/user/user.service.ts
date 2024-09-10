@@ -39,6 +39,9 @@ const loginUser = async (payload: TLoginInfo) => {
 
 const getUserFromDB = async (id: string) => {
     const result = await User.findById(id);
+    if (!result) {
+        throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+    }
     return result;
 };
 

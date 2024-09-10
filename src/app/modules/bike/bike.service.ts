@@ -8,6 +8,13 @@ const createBikeIntoDB = async (payload: TBikeInfo) => {
 };
 const getAllBikesFromDB = async () => {
   const result = await BikeInfo.find();
+  if (result.length === 0) {
+    return {
+      success: false,
+      message: 'No Data Found',
+      data: []
+    };
+  }
   return result;
 };
 
