@@ -12,7 +12,7 @@ const getAllBikesFromDB = async () => {
     return {
       success: false,
       message: 'No Data Found',
-      data: []
+      data: [],
     };
   }
   return result;

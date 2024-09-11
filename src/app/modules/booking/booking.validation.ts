@@ -21,9 +21,11 @@ const BookingInfoUpdateValidation = z.object({
   body: z.object({
     userId: objectIdSchema.optional(),
     bikeId: objectIdSchema.optional(),
-    startTime: z.string({
-      required_error: 'Start time is required',
-    }).optional(),
+    startTime: z
+      .string({
+        required_error: 'Start time is required',
+      })
+      .optional(),
     returnTime: z.string().optional(),
     totalCost: z.number().positive().optional(),
     isReturned: z.boolean().default(false).optional(),
@@ -32,5 +34,5 @@ const BookingInfoUpdateValidation = z.object({
 
 export const BookingInfoValidation = {
   bookingInfoValidation,
-  BookingInfoUpdateValidation
+  BookingInfoUpdateValidation,
 };

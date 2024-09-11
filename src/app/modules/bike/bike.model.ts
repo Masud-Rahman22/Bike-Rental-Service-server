@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { TBikeInfo } from "./bike.interface";
+import mongoose from 'mongoose';
+import { TBikeInfo } from './bike.interface';
 
 const bikeSchema = new mongoose.Schema<TBikeInfo>({
   name: {

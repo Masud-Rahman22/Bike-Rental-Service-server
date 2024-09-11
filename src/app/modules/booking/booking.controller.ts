@@ -19,7 +19,7 @@ const createRental = catchAsync(async (req, res) => {
     config.jwt_access_secret as string,
   ) as JwtPayload;
   const userId = decoded?.userId;
-  console.log(userId)
+  console.log(userId);
   const { bikeId, startTime } = req.body;
   const rental = await BookingServices.createRentalIntoDB(
     userId,
@@ -50,7 +50,7 @@ const updateRental = catchAsync(async (req, res) => {
     config.jwt_access_secret as string,
   ) as JwtPayload;
   const userId = decoded?.userId;
-  const result = await BookingServices.updateRentalIntoDB(rentalId,userId);
+  const result = await BookingServices.updateRentalIntoDB(rentalId, userId);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -60,14 +60,14 @@ const updateRental = catchAsync(async (req, res) => {
 });
 
 const getAllRentals = catchAsync(async (req, res) => {
-    const result = await BookingServices.getAllRentalsFromDB()
-    sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: 'Rentals retrieved successfully',
-        data: result,
-      });
-})
+  const result = await BookingServices.getAllRentalsFromDB();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Rentals retrieved successfully',
+    data: result,
+  });
+});
 
 export const BookingInfoControllers = {
   createRental,

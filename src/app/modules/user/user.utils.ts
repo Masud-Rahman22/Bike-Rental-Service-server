@@ -2,16 +2,16 @@ import jwt from 'jsonwebtoken';
 import { Schema } from 'mongoose';
 
 export const createToken = (
-    jwtPayload: {
-        userId: Schema.Types.ObjectId;
-        role: "user" | "admin";
-    },
-    secret: string,
-    expiresIn: string
+  jwtPayload: {
+    userId: Schema.Types.ObjectId;
+    role: 'user' | 'admin';
+  },
+  secret: string,
+  expiresIn: string,
 ) => {
-    return jwt.sign(
-        { userId: jwtPayload.userId.toString(), role: jwtPayload.role }, 
-        secret, 
-        { expiresIn }
-    );
+  return jwt.sign(
+    { userId: jwtPayload.userId.toString(), role: jwtPayload.role },
+    secret,
+    { expiresIn },
+  );
 };
