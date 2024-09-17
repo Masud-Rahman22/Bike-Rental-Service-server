@@ -4,40 +4,39 @@ import httpStatus from 'http-status';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../config';
 import { TUserRole } from '../modules/user/user.interface';
-// import { User } from "../modules/user/user.model";
 import AppError from '../erros/AppError';
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization;
-    if (!token) {
+    const authHeader = req.headers.authorization;
+
+    // Check if the authorization header is present and starts with "Bearer"
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
-        'you are not authorized to access this',
+        'You are not authorized to access this',
       );
     }
+
+    // Extract the token by removing the "Bearer " prefix
+    const token = authHeader.split(' ')[1];
+    // Verify the token
     const decoded = jwt.verify(
       token,
       config.jwt_access_secret as string,
     ) as JwtPayload;
+
     const { role } = decoded;
 
-    // const user = (await User.isUserExistByCustomId(userId))
-    // if (!user) {
-    //     throw new AppError(httpStatus.NOT_FOUND, 'this user is not found!')
-    // }
-
-    // if (user.passwordChangedAt && User.isJwtIssuedBeforePasswordChanged(user.passwordChangedAt, iat as number)) {
-    //     throw new AppError(httpStatus.UNAUTHORIZED, 'you are not authorized to access this')
-    // }
-
+    // Check if the role is allowed
     if (requiredRoles && !requiredRoles.includes(role)) {
       throw new AppError(
-        httpStatus.UNAUTHORIZED,
-        'you are not authorized to access this',
+        httpStatus.FORBIDDEN,
+        'You do not have permission to access this resource',
       );
     }
 
+    // Attach decoded token data to the request object
     req.user = decoded as JwtPayload;
     next();
   });

@@ -18,6 +18,23 @@ const createRentalIntoDB = async (
     throw new Error('Bike is not available');
   }
 
+  // Ensure startTime is a valid Date object
+  const parsedStartTime = new Date(startTime);
+  if (isNaN(parsedStartTime.getTime())) {
+    throw new AppError(400, 'Invalid start time');
+  }
+
+  // Check if startTime is in the past or today
+  const now = new Date();
+
+  // Remove time from both startTime and now to allow rentals starting today
+  const startDate = new Date(parsedStartTime.setHours(0, 0, 0, 0)); // Set time to 00:00:00 for the date
+  const today = new Date(now.setHours(0, 0, 0, 0));
+
+  if (startDate > today) {
+    throw new AppError(400, 'Start time must be in the past or today');
+  }
+
   // Create a new rental
   const newRental = new BookingInfo({
     userId,
@@ -45,6 +62,10 @@ const calculateRentalCost = (
   // Convert the startTime string to a Date object
   const start = new Date(startTime).getTime();
   const end = returnTime.getTime();
+
+  if (start > end) {
+    throw new AppError(400, 'Start time must be in the past');
+  }
 
   const durationInMs = end - start;
   const durationInHours = durationInMs / (1000 * 60 * 60); // Convert milliseconds to hours

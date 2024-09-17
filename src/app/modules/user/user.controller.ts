@@ -1,9 +1,11 @@
+import jwt, { JwtPayload }  from 'jsonwebtoken';
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { UserServices } from './user.service';
 import sendResponseWithToken from '../../utils/sendResponseWithToken';
 import AppError from '../../erros/AppError';
+import config from '../../config';
 
 const createUser = catchAsync(async (req, res) => {
   const userData = req.body;
@@ -31,8 +33,20 @@ const loginUser = catchAsync(async (req, res) => {
 });
 
 const getUser = catchAsync(async (req, res) => {
-  const { _id } = req.params;
-  const result = await UserServices.getUserFromDB(_id);
+  const authHeader = req.headers.authorization;
+  const token = authHeader!.split(' ')[1];
+  if (!token) {
+    throw new AppError(
+      httpStatus.UNAUTHORIZED,
+      'you are not authorized to access this',
+    );
+  }
+  const decoded = jwt.verify(
+    token,
+    config.jwt_access_secret as string,
+  ) as JwtPayload;
+  const userId = decoded?.userId;
+  const result = await UserServices.getUserFromDB(userId);
 
   if (!result) {
     throw new AppError(httpStatus.NOT_FOUND, 'User not found');
@@ -47,9 +61,20 @@ const getUser = catchAsync(async (req, res) => {
 });
 
 const updateProfile = catchAsync(async (req, res) => {
-  const { _id } = req.params;
-
-  const result = await UserServices.updateProfileIntoDB(_id, req.body);
+  const authHeader = req.headers.authorization;
+  const token = authHeader!.split(' ')[1];
+  if (!token) {
+    throw new AppError(
+      httpStatus.UNAUTHORIZED,
+      'you are not authorized to access this',
+    );
+  }
+  const decoded = jwt.verify(
+    token,
+    config.jwt_access_secret as string,
+  ) as JwtPayload;
+  const userId = decoded?.userId;
+  const result = await UserServices.updateProfileIntoDB(userId, req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

@@ -5,10 +5,12 @@ const bikeSchema = new mongoose.Schema<TBikeInfo>({
   name: {
     type: String,
     required: true,
+    unique: true
   },
   description: {
     type: String,
     required: true,
+    unique: true
   },
   pricePerHour: {
     type: Number,
@@ -29,6 +31,7 @@ const bikeSchema = new mongoose.Schema<TBikeInfo>({
   model: {
     type: String,
     required: true,
+    unique: true
   },
   brand: {
     type: String,

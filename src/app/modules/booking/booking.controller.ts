@@ -7,7 +7,8 @@ import { BookingServices } from './booking.service';
 import sendResponse from '../../utils/sendResponse';
 
 const createRental = catchAsync(async (req, res) => {
-  const token = req.headers.authorization;
+  const authHeader = req.headers.authorization;
+  const token = authHeader!.split(' ')[1];
   if (!token) {
     throw new AppError(
       httpStatus.UNAUTHORIZED,
@@ -38,7 +39,8 @@ const createRental = catchAsync(async (req, res) => {
 const updateRental = catchAsync(async (req, res) => {
   const { rentalId } = req.params;
 
-  const token = req.headers.authorization;
+  const authHeader = req.headers.authorization;
+  const token = authHeader!.split(' ')[1];
   if (!token) {
     throw new AppError(
       httpStatus.UNAUTHORIZED,
